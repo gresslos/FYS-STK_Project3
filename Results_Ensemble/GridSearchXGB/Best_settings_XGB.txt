@@ -1,0 +1,3 @@
+Best value: L.R. = 0.2, L2 = 0.1
+Best validation accuracy: 0.939993789784195
+Best indices: (3, 5)
