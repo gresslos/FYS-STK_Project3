@@ -26,7 +26,7 @@
   - `grid_search_results_XGB`: .joblib file containing the results of the cross validation process (redundant with `results_csv`)
   - `best_model`: .joblib file containing the best model (already trained on `x_train` and `y_train`)
 
-  ### GridSearchRF (found in `EnsembleMethods.ipynb`)
+### GridSearchRF (found in `EnsembleMethods.ipynb`)
 - **Input Variables**:
   - `x_train`, `y_train`: Training inputs and targets
   - `n_folds`: number of folds for cross validation
@@ -42,7 +42,7 @@
   - `grid_search_results_XGB`: .joblib file containing the results of the cross validation process (redundant with `results_csv`)
   - `best_model`: .joblib file containing the best model (already trained on `x_train` and `y_train`)
 
-   ### LossAccuracyOverRounds (found in `EnsembleMethods.ipynb` and `IrisTest.ipynb`)
+### LossAccuracyOverRounds (found in `EnsembleMethods.ipynb` and `IrisTest.ipynb`)
 - **Input Variables**:
   - `x_train`, `y_train`: Training inputs and targets
   - `x_test`, `y_test`: Testing inputs and targets
@@ -58,7 +58,7 @@
   - `train_accs_XGB`, `train_errors_XGB`: .npy files containing the arrays with the accuracy and entropy values obtained on the training set
   - `test_accs_XGB`, `test_errors_XGB`: .npy files containing the arrays with the accuracy and entropy values obtained on the testing set
 
-  ### LossAccuracyOverRounds (found in `EnsembleMethods.ipynb`)
+### LossAccuracyOverEstimators (found in `EnsembleMethods.ipynb`)
 - **Input Variables**:
   - `x_train`, `y_train`: Training inputs and targets
   - `x_test`, `y_test`: Testing inputs and targets
