@@ -574,7 +574,8 @@ plt.plot(Epochs, tr_loss, 'purple', label= 'Training loss')
 plt.plot(Epochs, val_loss, 'gold', label= 'Validation loss')
 
 parameter_string = rf"$\lambda$ = {lmbd}  &  $\eta$ = {eta}   &   Batch Size = {batch_size}   &   Activation Functions = {act_func}   &   Extra Dense Layers = {extra_dense_layer}   &   n_neurons = {n_neurons} "
-parameter_string_wrapped = "\n \n \n" + rf"$\lambda$ = {lmbd}  &  $\eta$ = {eta}   &   Batch Size = {batch_size} " + "\n" + f"  Activation Functions = {act_func} " + "\n" + f"Extra Dense Layers = {extra_dense_layer}   &   n_neurons = {n_neurons} "
+parameter_string_wrapped = "\n" + rf"$\lambda$ = {lmbd}  &  $\eta$ = {eta}   &   Batch Size = {batch_size} " + "\n" + f"  Activation Functions = {act_func} " + "\n" + f"Extra Dense Layers = {extra_dense_layer}   &   n_neurons = {n_neurons} "
+
 #plt.scatter(index_loss + 1, val_lowest, s= 150, c= 'darkblue', label= loss_label)
 plt.suptitle('CNN      -      Training and Validation Loss \n' , fontsize=fontsize)
 plt.title(parameter_string_wrapped, fontsize=fontsize-5)
@@ -612,25 +613,27 @@ y_pred = np.argmax(preds, axis=1)    # Most probable label     shape (122,)
 # -------------------------.-- Plot Confusion matrix --------------------------------------
 g_dict = test_gen.class_indices
 classes = list(g_dict.keys())
+classes = ['AG', 'BO', 'CB','DW','EP','F'] # Shortened for plotting
 
 cm = confusion_matrix(test_gen.classes, y_pred, normalize='true') 
 # normalize = 'true' -> get respective accuracy scores  
 # sum each row = 1 
 
 # Create a heat map
-plt.figure(figsize= (7, 12))
+plt.figure(figsize= (7, 10))
 sns.heatmap(cm, annot=True, cmap='Blues', xticklabels=classes, yticklabels=classes, fmt='.3f') #,  fmt='d')
 
 
 plt.suptitle('CNN      -      Confusion Matrix', fontsize=fontsize)
 plt.title(parameter_string_wrapped, fontsize=fontsize-5)
-plt.xlabel('Predicted Classes')
-plt.ylabel('True Classes')
+plt.xlabel('Predicted Classes', fontsize=fontsize-5)
+plt.ylabel('True Classes', fontsize=fontsize-5)
 
 # Modify the rotation of axis labels
-plt.xticks(rotation=45)  # Rotation of x-axis labels
+plt.xticks(rotation=0)   # Rotation of x-axis labels
 plt.yticks(rotation=0)   # Rotation of y-axis labels
 
+plt.tight_layout()
 plt.savefig("CNN_plots/confusion_matrix.png")
 plt.show()
 
