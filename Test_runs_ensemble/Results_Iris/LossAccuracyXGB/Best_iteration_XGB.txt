@@ -1,0 +1,2 @@
+Best iteration: Number = 7, testing accuracy = 0.9777777777777777
+Final accuracies: Training = 1.0, testing = 0.9555555555555556

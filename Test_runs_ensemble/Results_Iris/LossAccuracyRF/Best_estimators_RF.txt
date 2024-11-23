@@ -1,0 +1,2 @@
+Best n_estimators: Number = 7, testing accuracy = 0.9777777777777777
+Final accuracies: Training = 0.9809523809523809, testing = 0.9777777777777777
