@@ -567,8 +567,8 @@ acc_label = f'best epoch = {str(index_acc + 1)}'
 
 
 
-plt.figure(figsize= (7, 12))
-plt.style.use('fivethirtyeight')
+plt.figure(figsize= (7, 8))
+#plt.style.use('fivethirtyeight')
 
 plt.plot(Epochs, tr_loss, 'purple', label= 'Training loss')
 plt.plot(Epochs, val_loss, 'gold', label= 'Validation loss')
@@ -579,28 +579,31 @@ parameter_string_wrapped = "\n" + rf"$\lambda$ = {lmbd}  &  $\eta$ = {eta}   &  
 #plt.scatter(index_loss + 1, val_lowest, s= 150, c= 'darkblue', label= loss_label)
 plt.suptitle('CNN      -      Training and Validation Loss \n' , fontsize=fontsize)
 plt.title(parameter_string_wrapped, fontsize=fontsize-5)
-plt.xlabel('Epochs')
-plt.ylabel('Loss')
+plt.xlabel('Epochs', fontsize=lablesize)
+plt.ylabel('Loss', fontsize=lablesize)
 plt.legend()
+
+plt.subplots_adjust(top=0.8)  # padding to make space for the title
 plt.tight_layout
-plt.savefig("CNN_plots/train_val_loss.png")
+plt.savefig("CNN_plots/train_val_loss.png", bbox_inches = 'tight')
 
 
 
-plt.figure(figsize= (7, 12))
-plt.style.use('fivethirtyeight')
+plt.figure(figsize= (7, 8))
+#plt.style.use('fivethirtyeight')
 
 plt.plot(Epochs, tr_acc, 'purple', label= 'Training Accuracy')
 plt.plot(Epochs, val_acc, 'gold', label= 'Validation Accuracy')
 #plt.scatter(index_acc + 1 , acc_highest, s= 150, c= 'darkblue', label= acc_label)
-plt.suptitle('CNN      -      Training and Validation Accuracy', fontsize=fontsize)
+plt.suptitle('CNN     -     Training and Validation Accuracy', fontsize=fontsize)
 plt.title(parameter_string_wrapped, fontsize=fontsize-5)
-plt.xlabel('Epochs')
-plt.ylabel('Accuracy')
+plt.xlabel('Epochs', fontsize=lablesize)
+plt.ylabel('Accuracy', fontsize=lablesize)
 plt.legend()
 
+plt.subplots_adjust(top=0.8)  # padding to make space for the title
 plt.tight_layout
-plt.savefig("CNN_plots/train_val_acc.png")
+plt.savefig("CNN_plots/train_val_acc.png", bbox_inches = 'tight')
 
 
 
@@ -620,21 +623,21 @@ cm = confusion_matrix(test_gen.classes, y_pred, normalize='true')
 # sum each row = 1 
 
 # Create a heat map
-plt.figure(figsize= (7, 10))
-sns.heatmap(cm, annot=True, cmap='Blues', xticklabels=classes, yticklabels=classes, fmt='.3f') #,  fmt='d')
+plt.figure(figsize= (7, 8))
+sns.heatmap(cm, annot=True, cmap='Blues', xticklabels=classes, yticklabels=classes, fmt='.2f', annot_kws={"size": lablesize}) 
 
 
 plt.suptitle('CNN      -      Confusion Matrix', fontsize=fontsize)
 plt.title(parameter_string_wrapped, fontsize=fontsize-5)
-plt.xlabel('Predicted Classes', fontsize=fontsize-5)
-plt.ylabel('True Classes', fontsize=fontsize-5)
+plt.xlabel('Predicted Classes', fontsize=lablesize)
+plt.ylabel('True Classes', fontsize=lablesize)
 
 # Modify the rotation of axis labels
 plt.xticks(rotation=0)   # Rotation of x-axis labels
 plt.yticks(rotation=0)   # Rotation of y-axis labels
 
 plt.tight_layout()
-plt.savefig("CNN_plots/confusion_matrix.png")
+plt.savefig("CNN_plots/confusion_matrix.png", bbox_inches = 'tight')
 plt.show()
 
 
