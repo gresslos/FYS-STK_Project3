@@ -1,0 +1,3 @@
+Best value: Depth = 3
+Best validation accuracy: 0.9523809523809523
+Best indices: (2,)
