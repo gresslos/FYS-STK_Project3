@@ -215,11 +215,11 @@ kf = KFold(n_splits=n_splits, shuffle=True, random_state=1)
 
 # ------------------ Setting up parameters
 
-# ---- Fixed Parameters trought project----
+# ---- Fixed Parameters throughout project----
 n_filters = 6
 n_conv = 3
 n_pool = 2
-n_neurons = 50
+n_neurons = 50 # This will be tested for in the third and final hyperparameter optimization
 epochs = 100 # Final training with epochs = 1000
 # -----------------------------------------
 
@@ -228,7 +228,6 @@ act_func = 'relu'
 optimizer = tf.keras.optimizers.Adam 
 # Have implemented other optimizer for futere work
 # if want to test with different otimizers, ex Adamax etc..
-
 
 
 
@@ -245,7 +244,7 @@ eta_list = np.logspace(max_eta, 0, N_eta)
 print("lmbd = ", lmbd_list)
 print("eta  = ", eta_list)
 
-"""
+
 CNN_model_list = []
 fit_list       = []
 for lmbd in lmbd_list:
@@ -278,7 +277,7 @@ for lmbd in lmbd_list:
 
         # Save results
         fit_list.append([fit, lmbd, eta])
-"""
+
 
 
 def plot_accuracy_evoluton(fit_list, string1, string2, png_name):
@@ -318,7 +317,7 @@ def plot_accuracy_evoluton(fit_list, string1, string2, png_name):
     plt.savefig("CNN_plots/" + png_name + ".png")
 
 
-"""
+
 def plot_heatmap(fit_list, var1, var2, string1, string2, png_name):
 
 
@@ -389,7 +388,7 @@ tf.keras.utils.set_random_seed(seed) # must include for reproducibility
 
 
 # Defining parameter-space to search for optimal fit
-batch_size_list = np.linspace(5,50,10)   # forlag1 (5, 100, 20) forslag2 (10,100,10)
+batch_size_list = np.linspace(10,100,10)   # forlag1 (5, 100, 20) forslag2 (10,100,10)
 act_func_list = ['relu', 'leaky_relu'] 
 # act_func-string must match tf.keras.activations found at https://www.tensorflow.org/api_docs/python/tf/keras/activations
 
@@ -462,8 +461,8 @@ print(f"Accuracy(batch_size = {batch_size}, act_func = {act_func}) = {val_acc_op
 tf.keras.utils.set_random_seed(seed) # must include for reproducibility 
 
 # Defining parameter-space to search for optimal fit
-n_neurons_list = np.linspace(20,90,8)
-extra_dense_layer_list = [None, 1]
+n_neurons_list = np.linspace(20,80,7)
+extra_dense_layer_list = [None, 1, 2]
 # had to limit n_neurons_list from 10 elements to 7 because of memory issues
 # had to limit extra_dense_layer_list from 4 elements to 3 because of memory issues 
 
@@ -533,15 +532,18 @@ val_acc_optimal = np.mean([f.history['val_acc'] for f in fit], axis=0)[-1] # cal
 
 print("--------- Optimal Fit (according to Validation Accuracy)--------------")
 print(f"Accuracy(n_neurons = {n_neurons}, extra_dense_layer = {extra_dense_layer}) = {val_acc_optimal:.3f}")
+
+
+"""
+Parameters obtained from the run on 29.11.2024
+eta=0.001
+lmbd = 0.01
+batch_size = 100
+act_func = 'leaky_relu'
+n_neurons = 20
+extra_dense_layer = 1
 """
 
-
-eta = 0.001
-lmbd = 0.1
-n_neurons = 40
-extra_dense_layer = 1
-act_func = 'leaky_relu'
-batch_size = 30
 
 # ---------------- Making Final Model
 epochs = 1000 # final run
@@ -567,39 +569,43 @@ acc_label = f'best epoch = {str(index_acc + 1)}'
 
 
 
-plt.figure(figsize= (7, 12))
-plt.style.use('fivethirtyeight')
+plt.figure(figsize= (7, 8))
+#plt.style.use('fivethirtyeight')
 
 plt.plot(Epochs, tr_loss, 'purple', label= 'Training loss')
 plt.plot(Epochs, val_loss, 'gold', label= 'Validation loss')
 
 parameter_string = rf"$\lambda$ = {lmbd}  &  $\eta$ = {eta}   &   Batch Size = {batch_size}   &   Activation Functions = {act_func}   &   Extra Dense Layers = {extra_dense_layer}   &   n_neurons = {n_neurons} "
-parameter_string_wrapped = "\n \n \n" + rf"$\lambda$ = {lmbd}  &  $\eta$ = {eta}   &   Batch Size = {batch_size} " + "\n" + f"  Activation Functions = {act_func} " + "\n" + f"Extra Dense Layers = {extra_dense_layer}   &   n_neurons = {n_neurons} "
+parameter_string_wrapped = "\n" + rf"$\lambda$ = {lmbd}  &  $\eta$ = {eta}   &   Batch Size = {batch_size} " + "\n" + f"  Activation Functions = {act_func} " + "\n" + f"Extra Dense Layers = {extra_dense_layer}   &   n_neurons = {n_neurons} "
+
 #plt.scatter(index_loss + 1, val_lowest, s= 150, c= 'darkblue', label= loss_label)
 plt.suptitle('CNN      -      Training and Validation Loss \n' , fontsize=fontsize)
 plt.title(parameter_string_wrapped, fontsize=fontsize-5)
-plt.xlabel('Epochs')
-plt.ylabel('Loss')
+plt.xlabel('Epochs', fontsize=lablesize)
+plt.ylabel('Loss', fontsize=lablesize)
 plt.legend()
+
+plt.subplots_adjust(top=0.8)  # padding to make space for the title
 plt.tight_layout
-plt.savefig("CNN_plots/train_val_loss.png")
+plt.savefig("CNN_plots/train_val_loss.png", bbox_inches = 'tight')
 
 
 
-plt.figure(figsize= (7, 12))
-plt.style.use('fivethirtyeight')
+plt.figure(figsize= (7, 8))
+#plt.style.use('fivethirtyeight')
 
 plt.plot(Epochs, tr_acc, 'purple', label= 'Training Accuracy')
 plt.plot(Epochs, val_acc, 'gold', label= 'Validation Accuracy')
 #plt.scatter(index_acc + 1 , acc_highest, s= 150, c= 'darkblue', label= acc_label)
-plt.suptitle('CNN      -      Training and Validation Accuracy', fontsize=fontsize)
+plt.suptitle('CNN     -     Training and Validation Accuracy', fontsize=fontsize)
 plt.title(parameter_string_wrapped, fontsize=fontsize-5)
-plt.xlabel('Epochs')
-plt.ylabel('Accuracy')
+plt.xlabel('Epochs', fontsize=lablesize)
+plt.ylabel('Accuracy', fontsize=lablesize)
 plt.legend()
 
+plt.subplots_adjust(top=0.8)  # padding to make space for the title
 plt.tight_layout
-plt.savefig("CNN_plots/train_val_acc.png")
+plt.savefig("CNN_plots/train_val_acc.png", bbox_inches = 'tight')
 
 
 
@@ -612,26 +618,28 @@ y_pred = np.argmax(preds, axis=1)    # Most probable label     shape (122,)
 # -------------------------.-- Plot Confusion matrix --------------------------------------
 g_dict = test_gen.class_indices
 classes = list(g_dict.keys())
+classes = ['AG', 'BO', 'CB','DW','EP','F'] # Shortened for plotting
 
 cm = confusion_matrix(test_gen.classes, y_pred, normalize='true') 
 # normalize = 'true' -> get respective accuracy scores  
 # sum each row = 1 
 
 # Create a heat map
-plt.figure(figsize= (7, 12))
-sns.heatmap(cm, annot=True, cmap='Blues', xticklabels=classes, yticklabels=classes, fmt='.3f') #,  fmt='d')
+plt.figure(figsize= (7, 8))
+sns.heatmap(cm, annot=True, cmap='Blues', xticklabels=classes, yticklabels=classes, fmt='.2f', annot_kws={"size": lablesize}) 
 
 
 plt.suptitle('CNN      -      Confusion Matrix', fontsize=fontsize)
 plt.title(parameter_string_wrapped, fontsize=fontsize-5)
-plt.xlabel('Predicted Classes')
-plt.ylabel('True Classes')
+plt.xlabel('Predicted Classes', fontsize=lablesize)
+plt.ylabel('True Classes', fontsize=lablesize)
 
 # Modify the rotation of axis labels
-plt.xticks(rotation=45)  # Rotation of x-axis labels
+plt.xticks(rotation=0)   # Rotation of x-axis labels
 plt.yticks(rotation=0)   # Rotation of y-axis labels
 
-plt.savefig("CNN_plots/confusion_matrix.png")
+plt.tight_layout()
+plt.savefig("CNN_plots/confusion_matrix.png", bbox_inches = 'tight')
 plt.show()
 
 
