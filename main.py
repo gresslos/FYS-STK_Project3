@@ -215,11 +215,11 @@ kf = KFold(n_splits=n_splits, shuffle=True, random_state=1)
 
 # ------------------ Setting up parameters
 
-# ---- Fixed Parameters trought project----
+# ---- Fixed Parameters throughout project----
 n_filters = 6
 n_conv = 3
 n_pool = 2
-n_neurons = 50
+n_neurons = 50 # This will be tested for in the third and final hyperparameter optimization
 epochs = 100 # Final training with epochs = 1000
 # -----------------------------------------
 
@@ -228,7 +228,6 @@ act_func = 'relu'
 optimizer = tf.keras.optimizers.Adam 
 # Have implemented other optimizer for futere work
 # if want to test with different otimizers, ex Adamax etc..
-
 
 
 
@@ -245,7 +244,7 @@ eta_list = np.logspace(max_eta, 0, N_eta)
 print("lmbd = ", lmbd_list)
 print("eta  = ", eta_list)
 
-"""
+
 CNN_model_list = []
 fit_list       = []
 for lmbd in lmbd_list:
@@ -278,7 +277,7 @@ for lmbd in lmbd_list:
 
         # Save results
         fit_list.append([fit, lmbd, eta])
-"""
+
 
 
 def plot_accuracy_evoluton(fit_list, string1, string2, png_name):
@@ -318,7 +317,7 @@ def plot_accuracy_evoluton(fit_list, string1, string2, png_name):
     plt.savefig("CNN_plots/" + png_name + ".png")
 
 
-"""
+
 def plot_heatmap(fit_list, var1, var2, string1, string2, png_name):
 
 
@@ -389,7 +388,7 @@ tf.keras.utils.set_random_seed(seed) # must include for reproducibility
 
 
 # Defining parameter-space to search for optimal fit
-batch_size_list = np.linspace(5,50,10)   # forlag1 (5, 100, 20) forslag2 (10,100,10)
+batch_size_list = np.linspace(10,100,10)   # forlag1 (5, 100, 20) forslag2 (10,100,10)
 act_func_list = ['relu', 'leaky_relu'] 
 # act_func-string must match tf.keras.activations found at https://www.tensorflow.org/api_docs/python/tf/keras/activations
 
@@ -462,8 +461,8 @@ print(f"Accuracy(batch_size = {batch_size}, act_func = {act_func}) = {val_acc_op
 tf.keras.utils.set_random_seed(seed) # must include for reproducibility 
 
 # Defining parameter-space to search for optimal fit
-n_neurons_list = np.linspace(20,90,8)
-extra_dense_layer_list = [None, 1]
+n_neurons_list = np.linspace(20,80,7)
+extra_dense_layer_list = [None, 1, 2]
 # had to limit n_neurons_list from 10 elements to 7 because of memory issues
 # had to limit extra_dense_layer_list from 4 elements to 3 because of memory issues 
 
@@ -533,15 +532,18 @@ val_acc_optimal = np.mean([f.history['val_acc'] for f in fit], axis=0)[-1] # cal
 
 print("--------- Optimal Fit (according to Validation Accuracy)--------------")
 print(f"Accuracy(n_neurons = {n_neurons}, extra_dense_layer = {extra_dense_layer}) = {val_acc_optimal:.3f}")
+
+
+"""
+Parameters obtained from the run on 29.11.2024
+eta=0.001
+lmbd = 0.01
+batch_size = 100
+act_func = 'leaky_relu'
+n_neurons = 20
+extra_dense_layer = 1
 """
 
-
-eta = 0.001
-lmbd = 0.1
-n_neurons = 40
-extra_dense_layer = 1
-act_func = 'leaky_relu'
-batch_size = 30
 
 # ---------------- Making Final Model
 epochs = 1000 # final run
