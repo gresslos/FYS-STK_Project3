@@ -108,7 +108,7 @@ for idx, bird in enumerate(bird_species):
         
 # Show the plot
 plt.tight_layout()
-plt.savefig("CNN_plots_with_scaling/birds.png")
+plt.savefig("CNN_plots/birds.png")
 
 
 
@@ -314,7 +314,7 @@ def plot_accuracy_evoluton(fit_list, string1, string2, png_name):
     plt.legend(loc='upper left')
 
     plt.tight_layout
-    plt.savefig("CNN_plots_with_scaling/" + png_name + ".png")
+    plt.savefig("CNN_plots/" + png_name + ".png")
 
 
 
@@ -350,7 +350,7 @@ def plot_heatmap(fit_list, var1, var2, string1, string2, png_name):
     plt.xlabel(rf"{string2}", fontsize = lablesize)
     plt.ylabel(rf"{string1}", fontsize = lablesize)
 
-    plt.savefig("CNN_plots_with_scaling/" + png_name + ".png")
+    plt.savefig("CNN_plots/" + png_name + ".png")
 
     return index_max_val_acc, index_max_2d
 
@@ -535,7 +535,7 @@ print(f"Accuracy(n_neurons = {n_neurons}, extra_dense_layer = {extra_dense_layer
 
 
 """
-#Parameters obtained from the run on 1.12.2024
+# Parameters obtained from the run on 1.12.2024
 eta = 0.001
 lmbd = 0.01
 batch_size = 10
@@ -587,7 +587,7 @@ plt.legend()
 
 plt.subplots_adjust(top=0.8)  # padding to make space for the title
 plt.tight_layout
-plt.savefig("CNN_plots_with_scaling/train_val_loss.png", bbox_inches = 'tight')
+plt.savefig("CNN_plots/train_val_loss.png", bbox_inches = 'tight')
 
 
 
@@ -605,7 +605,7 @@ plt.legend()
 
 plt.subplots_adjust(top=0.8)  # padding to make space for the title
 plt.tight_layout
-plt.savefig("CNN_plots_with_scaling/train_val_acc.png", bbox_inches = 'tight')
+plt.savefig("CNN_plots/train_val_acc.png", bbox_inches = 'tight')
 
 
 
@@ -639,7 +639,7 @@ plt.xticks(rotation=0)   # Rotation of x-axis labels
 plt.yticks(rotation=0)   # Rotation of y-axis labels
 
 plt.tight_layout()
-plt.savefig("CNN_plots_with_scaling/confusion_matrix.png", bbox_inches = 'tight')
+plt.savefig("CNN_plots/confusion_matrix.png", bbox_inches = 'tight')
 plt.show()
 
 
