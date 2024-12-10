@@ -1,15 +1,40 @@
 # FYS-STK_Project3
 ## Overview
-- `importdata.ipynb`                           :  
-- `CNN.ipynb`           :  
-- `EnsembleMethods.ipynb` : Contains all data analysis steps for the used ensemble methods (random forests and XGBoost)
-- CNN_plots    :
-- Results_Ensemble   : Includes the files and plots produced by `EnsembleMethods.ipynb`
-- Test_runs_ensemble : Contains a debug run of XGBoost data analysis on the Iris set (`IrisTest.ipynb`) and the results produced by it (Results_Iris)
+- `CNN.py`                : Contains all steps for data analysis, optimization of the CNN, and final training along with prediction execution.
+- `CNN.ipynb`             : An initial attempt to run a complete analysis for the CNN, though the Jupyter kernel crashes. It presents the procedure step-by-step, with titles and some corresponding plots.
+- `EnsembleMethods.ipynb` : Contains all data analysis steps for the used ensemble methods (random forests and XGBoost).
+- CNN_plots          : Includes the plots produced by `CNN.py`, including optimization plots (heatmaps and validation accuracy evolution), as well as the final training and validation cross-entropy loss and accuracy evolution.
+- Results_Ensemble   : Includes the files and plots produced by `EnsembleMethods.ipynb`.
+- Test_runs_ensemble : Contains a debug run of XGBoost data analysis on the Iris set (`IrisTest.ipynb`) and the results produced by it(Results_Iris).
 
   
 
 ## Functions
+### CNN (found in `CNN.py` and `CNN.ipynb`)
+- **Input Variables**:
+  - `eta`: Learning rate for the optimizer.
+  - `lmbd`: L2 regularization parameter for kernel weights.
+  - `n_filters`: Number of filters for the convolutional layers.
+  - `n_conv`: Size of the convolutional kernel (height and width).
+  - `n_pool`: Pooling size (height and width) for max pooling layers.
+  - `n_neurons`: Number of neurons in the dense layers.
+  - `act_func`: Activation function for all layers (e.g., ReLU, LReLU).
+  - `optimizer`: Optimizer function (e.g., Adam).
+  - `extra_dense_layers`: (Optional) Number of additional dense layers to add after the initial one.
+
+  The function builds a CNN using the Keras Sequential API. It consists of multiple convolutional and max-pooling layers, followed by flattening and fully connected (dense) layers. The function also supports additional dense layers specified by the `extra_dense_layers` parameter. Finally, a softmax output layer is added for multi-class classification.
+
+  The model is compiled with a categorical cross-entropy loss function and accuracy as the evaluation metric. The optimizer's learning rate is set according to the `eta` parameter.
+
+- **Returns**:
+  - A compiled Keras `Sequential` model ready for training.
+
+- **Notes**:
+  - The function uses L2 regularization (`regularizers.l2(lmbd)`) for all convolutional and dense layers.
+  - The output layer uses the `softmax` activation function for multi-class classification.
+  - For more details on the Keras `Sequential` model, refer to the [official documentation](https://www.tensorflow.org/api_docs/python/tf/keras/Sequential).
+
+
 ### GridSearchXGBoost (found in `EnsembleMethods.ipynb` and `IrisTest.ipynb`)
 - **Input Variables**:
   - `x_train`, `y_train`: Training inputs and targets

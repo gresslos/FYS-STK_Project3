@@ -47,7 +47,8 @@ session = InteractiveSession(config=config)
 
 
 data_dir = 'Bird_Species_Dataset' 
-#the code file should be in the same folder as the folder called 'Bird Species Dataset' thus this is the path to the folder containing the dataset
+# the code file should be in the same folder as the folder called 'Bird Species Dataset' 
+# thus this is the path to the folder containing the dataset
 filepaths, image_list, label_list = [], [], []
 
 folders = os.listdir(data_dir)
@@ -163,7 +164,6 @@ def CNN(eta, lmbd, n_filters, n_conv, n_pool, n_neurons, act_func, optimizer, ex
 
         Conv2D(n_filters*4, (n_conv,n_conv), activation=act_func, padding='same', kernel_regularizer=regularizers.l2(lmbd)),
         MaxPooling2D((n_pool*4,n_pool*4)),
-        #MaxPooling2D((n_pool,n_pool)),  # mark this in if too many #params
         
         Flatten(),
         Dense(n_neurons, activation=act_func, kernel_regularizer=regularizers.l2(lmbd)),
@@ -173,15 +173,11 @@ def CNN(eta, lmbd, n_filters, n_conv, n_pool, n_neurons, act_func, optimizer, ex
     if extra_dense_layers:
         for i in range(extra_dense_layers):
             model.add(Dense(n_neurons, activation=act_func, kernel_regularizer=regularizers.l2(lmbd)))
-        #for n_neurons in extra_dense_layers:
-            #model.add(Dense(n_neurons, activation=act_func, kernel_regularizer=regularizers.l2(lmbd)))
         
     
     # Add the final output layer for classification
     model.add(Dense(class_count, activation='softmax'))
     
-    
-    #model.compile(Adam(learning_rate = eta), loss = 'categorical_crossentropy', metrics=['acc'])
     model.compile(optimizer(learning_rate = eta), loss = 'categorical_crossentropy', metrics=['acc'])
     # NOTES: 
     # INFO: tf.keras.Sequential   -> look at: https://www.tensorflow.org/api_docs/python/tf/keras/Sequential
@@ -226,7 +222,7 @@ epochs = 100 # Final training with epochs = 1000
 batch_size = 10
 act_func = 'relu'
 optimizer = tf.keras.optimizers.Adam 
-# Have implemented other optimizer for futere work
+# Can implemented other optimizer for futere work
 # if want to test with different otimizers, ex Adamax etc..
 
 
@@ -263,8 +259,6 @@ for lmbd in lmbd_list:
             
             # Initialize a new model for each fold
             CNN_model = CNN(eta, lmbd, n_filters, n_conv, n_pool, n_neurons, act_func, optimizer)
-            #print("------------------------- SUMMARY --------------------------")
-            #CNN_model.summary()
 
             # Train on current fold
             print(f'\nFold {fold + 1} - lmbd = {lmbd}, eta = {eta}\n')
@@ -319,8 +313,6 @@ def plot_accuracy_evoluton(fit_list, string1, string2, png_name):
 
 
 def plot_heatmap(fit_list, var1, var2, string1, string2, png_name):
-
-
     val_acc = [] # list with all accuracy scores for validation set    
     for fit, _, _ in fit_list:
         v_acc = np.mean([f.history['val_acc'] for f in fit], axis=0) # calculating mean val_acc for all folds
@@ -416,9 +408,7 @@ for batch_size in batch_size_list:
             
             # Initialize a new model for each fold
             CNN_model = CNN(eta, lmbd, n_filters, n_conv, n_pool, n_neurons, act_func, optimizer)
-            #print("------------------------- SUMMARY --------------------------")
-            #CNN_model.summary()
-
+        
             # Train on current fold
             print(f'\nFold {fold + 1} - batch_size = {batch_size}, act_func = {act_func} \n\n')
             fit_fold = CNN_model.fit(x= train_fold, epochs=epochs, batch_size=batch_size, validation_data=val_fold, verbose=0, callbacks=[early_stopping])
@@ -492,8 +482,6 @@ for n_neurons in n_neurons_list:
             
             # Initialize a new model for each fold
             CNN_model = CNN(eta, lmbd, n_filters, n_conv, n_pool, int(n_neurons), act_func, optimizer, extra_dense_layer)
-            #print("------------------------- SUMMARY --------------------------")
-            #CNN_model.summary()
 
             # Train on current fold
             print(f'\nFold {fold + 1} - n_neurons = {n_neurons}, extra_dense_layer = {extra_dense_layer}\n')
@@ -578,7 +566,6 @@ plt.plot(Epochs, val_loss, 'gold', label= 'Validation loss')
 parameter_string = rf"$\lambda$ = {lmbd}  &  $\eta$ = {eta}   &   Batch Size = {batch_size}   &   Activation Functions = {act_func}   &   Extra Dense Layers = {extra_dense_layer}   &   n_neurons = {n_neurons} "
 parameter_string_wrapped = "\n" + rf"$\lambda$ = {lmbd}  &  $\eta$ = {eta}   &   Batch Size = {batch_size} " + "\n" + f"  Activation Functions = {act_func} " + "\n" + f"Extra Dense Layers = {extra_dense_layer}   &   n_neurons = {n_neurons} "
 
-#plt.scatter(index_loss + 1, val_lowest, s= 150, c= 'darkblue', label= loss_label)
 plt.suptitle('CNN      -      Training and Validation Loss \n' , fontsize=fontsize)
 plt.title(parameter_string_wrapped, fontsize=fontsize-5)
 plt.xlabel('Epochs', fontsize=lablesize)
@@ -592,11 +579,9 @@ plt.savefig("CNN_plots/train_val_loss.png", bbox_inches = 'tight')
 
 
 plt.figure(figsize= (7, 8))
-#plt.style.use('fivethirtyeight')
 
 plt.plot(Epochs, tr_acc, 'purple', label= 'Training Accuracy')
 plt.plot(Epochs, val_acc, 'gold', label= 'Validation Accuracy')
-#plt.scatter(index_acc + 1 , acc_highest, s= 150, c= 'darkblue', label= acc_label)
 plt.suptitle('CNN     -     Training and Validation Accuracy', fontsize=fontsize)
 plt.title(parameter_string_wrapped, fontsize=fontsize-5)
 plt.xlabel('Epochs', fontsize=lablesize)
