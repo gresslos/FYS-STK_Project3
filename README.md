@@ -4,6 +4,7 @@
 - `CNN.ipynb`             : An initial attempt to run a complete analysis for the CNN, though the Jupyter kernel crashes. It presents the procedure step-by-step, with titles and some corresponding plots.
 - `EnsembleMethods.ipynb` : Contains all data analysis steps for the used ensemble methods (random forests and XGBoost).
 - CNN_plots          : Includes the plots produced by `CNN.py`, including optimization plots (heatmaps and validation accuracy evolution), as well as the final training and validation cross-entropy loss and accuracy evolution.
+- CNN_outputs        : Includes screenshots of the terminal output produced by `CNN.py`. These screenshots contains information about final model architecture, and accuracy values from the final model.
 - Results_Ensemble   : Includes the files and plots produced by `EnsembleMethods.ipynb`.
 - Test_runs_ensemble : Contains a debug run of the data analysis for the ensemble methods on the Iris set (`IrisTest.ipynb`) and the results produced by it(Results_Iris).
 
