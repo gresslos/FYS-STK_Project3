@@ -99,7 +99,7 @@ for idx, bird in enumerate(bird_species):
     # Filter the DataFrame to get file paths for this bird species
     bird_df = df[df['labels'] == bird].sample(num_images)  # Get a random sample of 16 images
     
-    # Loop through the 16 images and plot them
+    # Loop through the 12 images and plot them
     for i, file in enumerate(bird_df['filepaths'].values):
         plt.subplot(len(bird_species), num_images, idx * num_images + i + 1)
         img = Image.open(file)
@@ -216,13 +216,13 @@ n_filters = 6
 n_conv = 3
 n_pool = 2
 n_neurons = 50 # This will be tested for in the third and final hyperparameter optimization
-epochs = 100 # Final training with epochs = 1000
+epochs = 100 # Training of final model is with epochs = 1000
 # -----------------------------------------
 
 batch_size = 10
 act_func = 'relu'
 optimizer = tf.keras.optimizers.Adam 
-# Can implemented other optimizer for futere work
+# Can implement other optimizer for future work
 # if want to test with different otimizers, ex Adamax etc..
 
 
